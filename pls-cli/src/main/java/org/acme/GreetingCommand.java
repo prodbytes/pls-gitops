@@ -18,8 +18,10 @@ public class GreetingCommand implements Runnable {
         try {
             new HelloDsl().run();
         } catch (Exception e) {
+            e.printStackTrace();
             throw new RuntimeException(e);
         }
+        System.out.printf("Done %s, go go commando!%n", name); 
     }
 
 }

@@ -23,4 +23,4 @@ fi
 
 ./mvnw "${MVN_ARGS[@]}"
 
-echo "Native binary: $(ls target/*-runner)"
+echo "Native binary: $(ls target/pls)"

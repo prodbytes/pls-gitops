@@ -1,0 +1,181 @@
+{
+  "lockfile_version": "1",
+  "packages": {
+    "github:NixOS/nixpkgs/nixpkgs-unstable": {
+      "last_modified": "2026-07-05T19:27:47Z",
+      "resolved": "github:NixOS/nixpkgs/f205b5574fd0cb7da5b702a2da51507b7f4fdd1b?lastModified=1783279667"
+    },
+    "graalvmPackages.graalvm-ce-musl@latest": {
+      "last_modified": "2026-06-27T07:37:20Z",
+      "resolved": "github:NixOS/nixpkgs/3d46470bb3030020f7e1361f33514854f5bfa86d#graalvmPackages.graalvm-ce-musl",
+      "source": "devbox-search",
+      "version": "25.0.2",
+      "systems": {
+        "aarch64-linux": {
+          "outputs": [
+            {
+              "name": "out",
+              "path": "/nix/store/x6rw5sh5s688g5k3587aamxbhvxbd01c-graalvm-ce-25.0.2",
+              "default": true
+            }
+          ],
+          "store_path": "/nix/store/x6rw5sh5s688g5k3587aamxbhvxbd01c-graalvm-ce-25.0.2"
+        },
+        "x86_64-linux": {
+          "outputs": [
+            {
+              "name": "out",
+              "path": "/nix/store/d906gfwf81m3cw1aqprci85bdck6hvns-graalvm-ce-25.0.2",
+              "default": true
+            }
+          ],
+          "store_path": "/nix/store/d906gfwf81m3cw1aqprci85bdck6hvns-graalvm-ce-25.0.2"
+        }
+      }
+    },
+    "jreleaser-cli@latest": {
+      "last_modified": "2026-06-29T19:19:24Z",
+      "resolved": "github:NixOS/nixpkgs/7a1a64774a5fd0b0cd39ac95d0e170ace8b266a0#jreleaser-cli",
+      "source": "devbox-search",
+      "version": "1.25.0",
+      "systems": {
+        "aarch64-darwin": {
+          "outputs": [
+            {
+              "name": "out",
+              "path": "/nix/store/xx9zjq0mppk7nhipnwrza68lx3zivz6v-jreleaser-cli-1.25.0",
+              "default": true
+            }
+          ],
+          "store_path": "/nix/store/xx9zjq0mppk7nhipnwrza68lx3zivz6v-jreleaser-cli-1.25.0"
+        },
+        "aarch64-linux": {
+          "outputs": [
+            {
+              "name": "out",
+              "path": "/nix/store/mxv35cj3fs6ri8rdk1nnay3f0i2pvgad-jreleaser-cli-1.25.0",
+              "default": true
+            }
+          ],
+          "store_path": "/nix/store/mxv35cj3fs6ri8rdk1nnay3f0i2pvgad-jreleaser-cli-1.25.0"
+        },
+        "x86_64-darwin": {
+          "outputs": [
+            {
+              "name": "out",
+              "path": "/nix/store/c00f3wxrkbklimpygfq0x3lxzqkb2j90-jreleaser-cli-1.25.0",
+              "default": true
+            }
+          ],
+          "store_path": "/nix/store/c00f3wxrkbklimpygfq0x3lxzqkb2j90-jreleaser-cli-1.25.0"
+        },
+        "x86_64-linux": {
+          "outputs": [
+            {
+              "name": "out",
+              "path": "/nix/store/pi5lfn5w1by48s4bn9263vnf9s9a0qa6-jreleaser-cli-1.25.0",
+              "default": true
+            }
+          ],
+          "store_path": "/nix/store/pi5lfn5w1by48s4bn9263vnf9s9a0qa6-jreleaser-cli-1.25.0"
+        }
+      }
+    },
+    "maven@latest": {
+      "last_modified": "2026-07-04T17:57:37Z",
+      "resolved": "github:NixOS/nixpkgs/19a8a1e6d8b7315b6fd84e5a51977ce6f69d5a5b#maven",
+      "source": "devbox-search",
+      "version": "3.9.16",
+      "systems": {
+        "aarch64-darwin": {
+          "outputs": [
+            {
+              "name": "out",
+              "path": "/nix/store/dhj7kc8fnha1y4x1dv2ply3ym80ns7gh-maven-3.9.16",
+              "default": true
+            }
+          ],
+          "store_path": "/nix/store/dhj7kc8fnha1y4x1dv2ply3ym80ns7gh-maven-3.9.16"
+        },
+        "aarch64-linux": {
+          "outputs": [
+            {
+              "name": "out",
+              "path": "/nix/store/47dkd3s8pjcp297r9qyf1k2w2xdc4114-maven-3.9.16",
+              "default": true
+            }
+          ],
+          "store_path": "/nix/store/47dkd3s8pjcp297r9qyf1k2w2xdc4114-maven-3.9.16"
+        },
+        "x86_64-darwin": {
+          "outputs": [
+            {
+              "name": "out",
+              "path": "/nix/store/334davh2hdmg5ma9pxxz5vpz39dji3vs-maven-3.9.16",
+              "default": true
+            }
+          ],
+          "store_path": "/nix/store/334davh2hdmg5ma9pxxz5vpz39dji3vs-maven-3.9.16"
+        },
+        "x86_64-linux": {
+          "outputs": [
+            {
+              "name": "out",
+              "path": "/nix/store/2vwgw5nzxz0fnnkynkwvsiyg3c1w6j6s-maven-3.9.16",
+              "default": true
+            }
+          ],
+          "store_path": "/nix/store/2vwgw5nzxz0fnnkynkwvsiyg3c1w6j6s-maven-3.9.16"
+        }
+      }
+    },
+    "quarkus@latest": {
+      "last_modified": "2026-06-27T07:37:20Z",
+      "resolved": "github:NixOS/nixpkgs/3d46470bb3030020f7e1361f33514854f5bfa86d#quarkus",
+      "source": "devbox-search",
+      "version": "3.36.3",
+      "systems": {
+        "aarch64-darwin": {
+          "outputs": [
+            {
+              "name": "out",
+              "path": "/nix/store/x8ia8fwhszrpk8ccp3dgcgnw5jh16h6k-quarkus-cli-3.36.3",
+              "default": true
+            }
+          ],
+          "store_path": "/nix/store/x8ia8fwhszrpk8ccp3dgcgnw5jh16h6k-quarkus-cli-3.36.3"
+        },
+        "aarch64-linux": {
+          "outputs": [
+            {
+              "name": "out",
+              "path": "/nix/store/6m070rsf8hhq9az65pfqx4cm33x4qarr-quarkus-cli-3.36.3",
+              "default": true
+            }
+          ],
+          "store_path": "/nix/store/6m070rsf8hhq9az65pfqx4cm33x4qarr-quarkus-cli-3.36.3"
+        },
+        "x86_64-darwin": {
+          "outputs": [
+            {
+              "name": "out",
+              "path": "/nix/store/xxpd9bkyvgy949xy68l1ibh9vabymhrn-quarkus-cli-3.36.3",
+              "default": true
+            }
+          ],
+          "store_path": "/nix/store/xxpd9bkyvgy949xy68l1ibh9vabymhrn-quarkus-cli-3.36.3"
+        },
+        "x86_64-linux": {
+          "outputs": [
+            {
+              "name": "out",
+              "path": "/nix/store/p9bqlwwhyjbbz4ja3g5mgriijw5x4k5p-quarkus-cli-3.36.3",
+              "default": true
+            }
+          ],
+          "store_path": "/nix/store/p9bqlwwhyjbbz4ja3g5mgriijw5x4k5p-quarkus-cli-3.36.3"
+        }
+      }
+    }
+  }
+}
