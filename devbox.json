@@ -4,6 +4,7 @@
     "graalvmPackages.graalvm-ce-musl": "latest",
     "quarkus":                         "latest",
     "maven":                           "latest",
-    "jreleaser-cli":                   "latest"
+    "jreleaser-cli":                   "latest",
+    "zlib":                            "latest"
   }
 }
