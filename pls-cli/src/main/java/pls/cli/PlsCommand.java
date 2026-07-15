@@ -40,7 +40,7 @@ public class PlsCommand implements Runnable {
 
     @Override
     public void run() {
-        ctx.info("pls...");
+        ctx.info("pls... running. Press 'q' or 'ctrl+c' to exit.");
         ctx.info("goal: %s" ,goal); 
         ctx.info("dir: %s", dir.toAbsolutePath().normalize());
         ctx.info("config.tuiEnabled: %s", config.tuiEnabled().map(String::valueOf).orElse("unset"));
@@ -54,7 +54,7 @@ public class PlsCommand implements Runnable {
             default -> ctx.info("Unknown handler for goal: %s", goal);
         }
 
-        ctx.info("Done!");
+        ctx.info("Done, quit with 'q' or 'ctrl+c'!");
         ctx.await();
     }
 

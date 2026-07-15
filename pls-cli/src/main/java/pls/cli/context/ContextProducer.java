@@ -23,7 +23,7 @@ public class ContextProducer {
     @ApplicationScoped
     public PlsContext context() {
         // Explicit config wins; only fall back to desktop detection when unset.
-        var isTUI = config.tuiEnabled().orElseGet(ContextProducer::isDesktop);
+        var isTUI = isTUI();
         if (isTUI) {
             return tuiContext.get();
         }else{
@@ -31,7 +31,11 @@ public class ContextProducer {
         }
     }
 
-    public static boolean isDesktop() {
+    public boolean isTUI() {
+       return config.tuiEnabled().orElseGet(ContextProducer::isDesktop);
+    }
+
+	public static boolean isDesktop() {
         var os = System.getProperty("os.name", "").toLowerCase(Locale.ROOT);
         if (os.contains("windows")) {
             return true;
