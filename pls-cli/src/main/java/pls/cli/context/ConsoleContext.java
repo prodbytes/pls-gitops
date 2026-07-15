@@ -7,6 +7,6 @@ import jakarta.enterprise.inject.Typed;
 // which would be ambiguous with the ContextProducer bean.
 @Typed(ConsoleContext.class)
 @ApplicationScoped
-public class ConsoleContext implements PlsContext {
+public class ConsoleContext extends AnyContext {
 
 }

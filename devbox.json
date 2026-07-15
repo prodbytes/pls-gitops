@@ -5,6 +5,7 @@
     "quarkus":                         "latest",
     "maven":                           "latest",
     "jreleaser-cli":                   "latest",
-    "zlib":                            "latest"
+    "zlib":                            "latest",
+    "awscli2":                         "latest"
   }
 }

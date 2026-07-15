@@ -1,0 +1,14 @@
+{
+    "version": "0.2.0",
+    "configurations": [
+        {
+            "type": "java",
+            "name": "PlsMain",
+            "request": "launch",
+            "mainClass": "pls.cli.PlsMain",
+            "projectName": "pls-cli",
+            "vmArgs": "-XX:+EnableDynamicAgentLoading --enable-native-access=ALL-UNNAMED",
+            "console": "integratedTerminal"
+        }
+    ]
+}

@@ -6,9 +6,12 @@ import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.enterprise.inject.Instance;
 import jakarta.enterprise.inject.Produces;
 import jakarta.inject.Inject;
+import pls.cli.config.PlsConfig;
 
 @ApplicationScoped
 public class ContextProducer {
+    @Inject
+    PlsConfig config;
 
     @Inject
     Instance<TUIContext> tuiContext;
@@ -19,7 +22,13 @@ public class ContextProducer {
     @Produces
     @ApplicationScoped
     public PlsContext context() {
-        return isDesktop() ? tuiContext.get() : consoleContext.get();
+        // Explicit config wins; only fall back to desktop detection when unset.
+        var isTUI = config.tuiEnabled().orElseGet(ContextProducer::isDesktop);
+        if (isTUI) {
+            return tuiContext.get();
+        }else{
+            return consoleContext.get();
+        }
     }
 
     public static boolean isDesktop() {

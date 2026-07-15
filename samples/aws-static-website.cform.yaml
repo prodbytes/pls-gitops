@@ -1,0 +1,90 @@
+AWSTemplateFormatVersion: "2010-09-09"
+Description: >-
+  Public static website hosted on S3. Creates a bucket with website hosting
+  enabled and a bucket policy granting public read access to its objects.
+  Upload site content (e.g. index.html) to the bucket after deployment.
+
+Parameters:
+  BucketName:
+    Type: String
+    Default: ""
+    Description: >-
+      Optional bucket name (must be globally unique). Leave empty to let
+      CloudFormation generate one.
+    AllowedPattern: "^$|^[a-z0-9][a-z0-9.-]{1,61}[a-z0-9]$"
+    ConstraintDescription: >-
+      Must be a valid S3 bucket name (lowercase letters, numbers, dots,
+      hyphens) or empty.
+  IndexDocument:
+    Type: String
+    Default: index.html
+    Description: Object served for the site root and directory requests.
+  ErrorDocument:
+    Type: String
+    Default: index.html
+    Description: Object served for 4xx errors.
+
+Conditions:
+  HasBucketName:
+    Fn::Not:
+      - Fn::Equals:
+          - Ref: BucketName
+          - ""
+
+Resources:
+  WebsiteBucket:
+    Type: AWS::S3::Bucket
+    Properties:
+      BucketName:
+        Fn::If:
+          - HasBucketName
+          - Ref: BucketName
+          - Ref: AWS::NoValue
+      WebsiteConfiguration:
+        IndexDocument:
+          Ref: IndexDocument
+        ErrorDocument:
+          Ref: ErrorDocument
+      # New buckets block public access by default; a public website bucket
+      # must opt out so the public-read bucket policy below can take effect.
+      PublicAccessBlockConfiguration:
+        BlockPublicAcls: false
+        BlockPublicPolicy: false
+        IgnorePublicAcls: false
+        RestrictPublicBuckets: false
+      OwnershipControls:
+        Rules:
+          - ObjectOwnership: BucketOwnerEnforced
+
+  WebsiteBucketPolicy:
+    Type: AWS::S3::BucketPolicy
+    Properties:
+      Bucket:
+        Ref: WebsiteBucket
+      PolicyDocument:
+        Version: "2012-10-17"
+        Statement:
+          - Sid: PublicReadGetObject
+            Effect: Allow
+            Principal: "*"
+            Action: s3:GetObject
+            Resource:
+              Fn::Sub: "${WebsiteBucket.Arn}/*"
+
+Outputs:
+  BucketName:
+    Description: Name of the S3 bucket hosting the website.
+    Value:
+      Ref: WebsiteBucket
+  WebsiteURL:
+    Description: S3 website endpoint URL.
+    Value:
+      Fn::GetAtt:
+        - WebsiteBucket
+        - WebsiteURL
+  BucketArn:
+    Description: ARN of the website bucket.
+    Value:
+      Fn::GetAtt:
+        - WebsiteBucket
+        - Arn
