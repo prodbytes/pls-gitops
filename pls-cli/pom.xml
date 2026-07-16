@@ -10,6 +10,9 @@
 
     <properties>
         <compiler-plugin.version>3.15.0</compiler-plugin.version>
+        <exec-plugin.version>3.5.1</exec-plugin.version>
+        <jansi.version>2.4.2</jansi.version>
+        <jna.version>5.18.1</jna.version>
         <maven.compiler.release>25</maven.compiler.release>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
@@ -87,13 +90,13 @@
         <dependency>
             <groupId>org.fusesource.jansi</groupId>
             <artifactId>jansi</artifactId>
-            <version>2.4.2</version>
+            <version>${jansi.version}</version>
             <scope>runtime</scope>
         </dependency>
         <dependency>
             <groupId>net.java.dev.jna</groupId>
             <artifactId>jna</artifactId>
-            <version>5.18.1</version>
+            <version>${jna.version}</version>
             <scope>runtime</scope>
         </dependency>
     </dependencies>
@@ -128,6 +131,14 @@
                         <java.util.logging.manager>org.jboss.logmanager.LogManager</java.util.logging.manager>
                         <maven.home>${maven.home}</maven.home>
                     </systemPropertyVariables>
+                </configuration>
+            </plugin>
+            <plugin>
+                <groupId>org.codehaus.mojo</groupId>
+                <artifactId>exec-maven-plugin</artifactId>
+                <version>${exec-plugin.version}</version>
+                <configuration>
+                    <mainClass>pls.cli.PlsMain</mainClass>
                 </configuration>
             </plugin>
             <plugin>

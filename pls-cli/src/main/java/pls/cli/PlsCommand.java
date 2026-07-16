@@ -1,5 +1,6 @@
 package pls.cli;
 
+import java.nio.file.Files;
 import java.nio.file.Path;
 
 import jakarta.enterprise.event.Event;
@@ -43,7 +44,13 @@ public class PlsCommand implements Runnable {
         ctx.info("pls... running. Press 'q' or 'ctrl+c' to exit.");
         ctx.info("goal: %s" ,goal); 
         ctx.info("dir: %s", dir.toAbsolutePath().normalize());
-        ctx.info("config.tuiEnabled: %s", config.tuiEnabled().map(String::valueOf).orElse("unset"));
+        ctx.debug("config.tuiEnabled: %s", config.tuiEnabled().map(String::valueOf).orElse("unset"));
+
+        if (!Files.isDirectory(dir)) {
+            ctx.info("Directory does not exist: %s", dir.toAbsolutePath().normalize());
+            return;
+        }
+
         ctx.setGoal(goal);
         ctx.setDir(dir);
         ctx.init();

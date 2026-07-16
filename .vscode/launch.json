@@ -3,6 +3,20 @@
     "configurations": [
         {
             "type": "java",
+            "name": "DeployAWSStaticWebsite",
+            "request": "launch",
+            "mainClass": "pls.cli.samples.awsStaticWebsite.DeployAWSStaticWebsite",
+            "projectName": "pls-cli"
+        },
+        {
+            "type": "java",
+            "name": "AWSStaticWebsite",
+            "request": "launch",
+            "mainClass": "pls.cli.samples.AWSStaticWebsite",
+            "projectName": "pls-cli"
+        },
+        {
+            "type": "java",
             "name": "PlsMain",
             "request": "launch",
             "mainClass": "pls.cli.PlsMain",
