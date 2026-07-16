@@ -103,6 +103,7 @@
 
     <build>
         <finalName>pls</finalName>
+        <defaultGoal>verify</defaultGoal>
         <plugins>
             <plugin>
                 <groupId>${quarkus.platform.group-id}</groupId>
