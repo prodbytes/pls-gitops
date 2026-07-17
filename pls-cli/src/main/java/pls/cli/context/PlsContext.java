@@ -4,6 +4,11 @@ import java.nio.file.Path;
 
 import org.jboss.logging.Logger;
 
+import pls.cli.act.ActContext;
+import pls.cli.classify.ClassifyContext;
+import pls.cli.report.ReportContext;
+import pls.cli.scan.ScanContext;
+
 public interface PlsContext {
 
     StackWalker CALLER_WALKER = StackWalker.getInstance(StackWalker.Option.RETAIN_CLASS_REFERENCE);
@@ -52,4 +57,9 @@ public interface PlsContext {
     void setDir(Path dir);
     String getGoal();
     Path getDir();
+
+    ScanContext scan();
+    ClassifyContext classify();
+    ActContext act();
+    ReportContext report();
 }

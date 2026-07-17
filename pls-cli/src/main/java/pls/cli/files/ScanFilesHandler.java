@@ -1,4 +1,4 @@
-package pls.cli.deploy;
+package pls.cli.files;
 
 import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.enterprise.event.Event;
@@ -7,10 +7,10 @@ import jakarta.inject.Inject;
 import pls.cli.Action;
 import pls.cli.ActionSets;
 import pls.cli.context.PlsContext;
-import pls.cli.files.FileScanner;
+import pls.cli.deploy.DeployFile;
 
 @ApplicationScoped
-public class DeployHandler {
+public class ScanFilesHandler {
 
     private static final Action DEPLOY = new Action("deploy");
 
@@ -26,13 +26,10 @@ public class DeployHandler {
     @Inject
     Event<DeployFile> deployFile;
 
-    void onDeploy(@Observes DeployEvent event) {
-        ctx.info("Deploy started in %s", event.dir().toAbsolutePath().normalize());
-        fileScanner.scan().forEach((file, actionSet) -> {
-            if (actionSets.actionsFor(actionSet).contains(DEPLOY)) {
-                deployFile.fire(new DeployFile(file, actionSet, DEPLOY));
-            }
-        });
+    void onDeploy(@Observes ScanFilesEvent event) {
+        ctx.info("Scan files started in %s", event.dir().toAbsolutePath().normalize());
+        var fileResources = fileScanner.scan();
+        ctx.scan().setResourceRecords(fileResources);
     }
 
 }

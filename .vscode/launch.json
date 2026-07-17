@@ -3,6 +3,13 @@
     "configurations": [
         {
             "type": "java",
+            "name": "DeployAWSStaticWebsiteCform",
+            "request": "launch",
+            "mainClass": "pls.cli.samples.awsStaticWebsite.DeployAWSStaticWebsiteCform",
+            "projectName": "pls-cli"
+        },
+        {
+            "type": "java",
             "name": "DeployAWSStaticWebsite",
             "request": "launch",
             "mainClass": "pls.cli.samples.awsStaticWebsite.DeployAWSStaticWebsite",

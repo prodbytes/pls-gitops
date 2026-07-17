@@ -2,6 +2,7 @@ package pls.cli;
 
 import java.nio.file.Files;
 import java.nio.file.Path;
+import java.util.List;
 
 import jakarta.enterprise.event.Event;
 import jakarta.inject.Inject;
@@ -9,7 +10,7 @@ import picocli.CommandLine.Command;
 import picocli.CommandLine.Parameters;
 import pls.cli.config.PlsConfig;
 import pls.cli.context.PlsContext;
-import pls.cli.deploy.DeployEvent;
+import pls.cli.files.ScanFilesEvent;
 import pls.cli.prune.PruneEvent;
 
 @Command(name = "pls", mixinStandardHelpOptions = true)
@@ -22,10 +23,10 @@ public class PlsCommand implements Runnable {
     PlsContext ctx;
 
     @Inject
-    Event<DeployEvent> deployEvent;
+    Event<ScanFilesEvent> deployEvent;
 
     @Inject
-    DeployEvent deploy;
+    ScanFilesEvent deploy;
 
     @Inject
     Event<PruneEvent> pruneEvent;
@@ -54,15 +55,48 @@ public class PlsCommand implements Runnable {
         ctx.setGoal(goal);
         ctx.setDir(dir);
         ctx.init();
-        switch (goal) {
-            case "deploy" -> deployEvent.fire(deploy);
-            case "prune" -> pruneEvent.fire(prune);
-            case null -> ctx.info("No goal specified, nothing to do. Try 'gitops', 'prune' or 'help' for more information.");
-            default -> ctx.info("Unknown handler for goal: %s", goal);
+        
+        var actions = plan(new Goal(goal));
+        for (var action : actions) {
+            scar(action);    
         }
+        
 
         ctx.info("Done, quit with 'q' or 'ctrl+c'!");
         ctx.await();
+    }
+
+    private List<Action> plan(Goal goal) {
+        return switch (goal.value()) {
+            case "deploy" -> List.of(Action.DEPLOY);
+            case "prune" -> List.of(Action.PRUNE);
+            case "gitops" -> List.of(Action.DEPLOY, Action.PRUNE);
+            default -> List.of();
+        };
+    }
+
+    private void scar(Action action) {
+        scan(action);
+        classify(action);
+        act(action);
+        report(action);
+    }
+
+    private void scan(Action action) {
+        ctx.info("🔎 Scanning on [%s]", action);
+        ctx.scan().accept(action);
+    }
+
+    private void classify(Action action) {
+        ctx.info("🧐 Classifying on [%s]", action);
+    }
+
+    private void act(Action action) {
+        ctx.info("⚡ Acting on [%s]", action);
+    }
+
+    private void report(Action action) {
+        ctx.info("📝 Reporting on [%s]", action);
     }
 
 }

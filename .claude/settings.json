@@ -7,7 +7,11 @@
       "mcp__mintlify-docs__search_mintlify",
       "Bash(java -version)",
       "Bash(command -v *)",
-      "Bash(tmux capture-pane *)"
+      "Bash(tmux capture-pane *)",
+      "Bash(bash -n *)",
+      "Bash(xmllint --noout *)",
+      "Bash(mvn -version)",
+      "Bash(mvn --version)"
     ]
   }
 }
