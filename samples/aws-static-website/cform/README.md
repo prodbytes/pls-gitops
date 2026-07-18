@@ -1,0 +1,1 @@
+Example of deploying a static website to Amazon S3

@@ -24,7 +24,7 @@ public class ScanFilesHandler {
 
 
     void onDeploy(@Observes ScanFilesEvent event) {
-        log.info("Scan files started in %s", event.dir().toAbsolutePath().normalize());
+        log.debug("Scan files started in %s", event.dir().toAbsolutePath().normalize());
         var fileResources = fileScanner.scan();
         ctx.setResourceRecords(fileResources);
     }

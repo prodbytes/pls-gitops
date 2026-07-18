@@ -12,6 +12,7 @@ import pls.cli.ResourceRecord;
 import pls.cli.context.PlsContext;
 import pls.cli.event.PlsEvent;
 import pls.cli.files.ScanFilesEvent;
+import pls.cli.log.Logs;
 
 /** State of the scan phase: the resources found in the context dir. */
 @Dependent
@@ -26,13 +27,17 @@ public class ScanContext {
     @Inject
     PlsContext ctx;
 
+    @Inject
+    Logs log;
+
     public void accept(Action action) {
         // Get events for action in separate method, so that we can test it in isolation.
         var events = getEventsForAction(action);
         // fire them using cdi
         events.forEach(eventBus::fire);
         //TODO: Extract logging context to a separate class structure to avoid cyclic incjection
-        Log.infof("Scan completed for action %s, found %d resources", action.value(), ctx.getResourceRecords().size());   
+        log.info("Scan completed for action %s, found %d resources", action.value(), ctx.getResourceRecords().size()); 
+        ctx.getResourceRecords().forEach(x -> log.debug("%s",x)); 
     }
 
     private List<PlsEvent> getEventsForAction(Action action) {

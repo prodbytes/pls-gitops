@@ -1,9 +1,12 @@
 package pls.cli.context;
 
 import java.nio.file.Path;
+import java.util.LinkedHashMap;
 import java.util.List;
+import java.util.Map;
 
 import jakarta.inject.Inject;
+import pls.cli.Action;
 import pls.cli.ResourceRecord;
 import pls.cli.act.ActContext;
 import pls.cli.plan.PlanContext;
@@ -30,7 +33,9 @@ public abstract class AnyContext implements PlsContext {
     private String goal;
     private Path dir;
 
+    //TODO: Consider moving this list to ScanContext
     private List<ResourceRecord> resourceRecords = List.of();
+
 
     public List<ResourceRecord> getResourceRecords() {
         return resourceRecords;

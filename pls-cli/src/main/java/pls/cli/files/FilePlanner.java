@@ -1,29 +1,36 @@
 package pls.cli.files;
 
+import java.lang.classfile.ClassFile.Option;
 import java.nio.file.Path;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 import jakarta.enterprise.context.ApplicationScoped;
+import jakarta.inject.Inject;
 import pls.cli.Action;
 import pls.cli.ActionSets;
 import pls.cli.ResourceRecord;
+import pls.cli.context.PlsContext;
 
 @ApplicationScoped
 public class FilePlanner {
 
-    public List<Action> planFor(Action action, ResourceRecord resource) {
+    @Inject
+    PlsContext ctx;
+
+    
+
+    public Optional<Action> planFor(ResourceRecord resource, Action action) {
         var file = resource.path();
         var name = file.getFileName().toString();
-        var plan = new ArrayList<Action>();
         if (name.contains(".cform.")) {
             var actionSet = ActionSets.CLOUDFORMATION;
-            actionSet
-                .stream()
-                .filter(a -> a.equals(action))
-                .forEach(plan::add);
+            if(actionSet.contains(action)){
+                return Optional.of(action);
+            }
         }
-        return plan;
+        return Optional.empty();
     }
     
 }
