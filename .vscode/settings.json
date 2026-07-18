@@ -6,5 +6,6 @@
             "path": "/home/vscode/src/prodbytes/pls-gitops/.devbox/nix/profile/default",
             "default": true
         }
-    ]
+    ],
+    "java.debug.settings.onBuildFailureProceed": true
 }

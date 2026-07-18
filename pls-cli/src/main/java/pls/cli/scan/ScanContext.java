@@ -23,15 +23,8 @@ public class ScanContext {
     @Inject
     Instance<ScanFilesEvent> scanFilesEvent;
 
-    private List<ResourceRecord> resourceRecords = List.of();
-
-    public List<ResourceRecord> getResourceRecords() {
-        return resourceRecords;
-    }
-
-    public void setResourceRecords(List<ResourceRecord> resourceRecords) {
-        this.resourceRecords = resourceRecords;
-    }
+    @Inject
+    PlsContext ctx;
 
     public void accept(Action action) {
         // Get events for action in separate method, so that we can test it in isolation.
@@ -39,7 +32,7 @@ public class ScanContext {
         // fire them using cdi
         events.forEach(eventBus::fire);
         //TODO: Extract logging context to a separate class structure to avoid cyclic incjection
-        Log.infof("Scan completed for action %s, found %d resources", action.value(), resourceRecords.size());   
+        Log.infof("Scan completed for action %s, found %d resources", action.value(), ctx.getResourceRecords().size());   
     }
 
     private List<PlsEvent> getEventsForAction(Action action) {

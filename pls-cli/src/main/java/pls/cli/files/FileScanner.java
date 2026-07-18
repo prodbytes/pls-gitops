@@ -9,8 +9,6 @@ import java.util.stream.Stream;
 
 import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.inject.Inject;
-import pls.cli.ActionSet;
-import pls.cli.ActionSets;
 import pls.cli.ResourceRecord;
 import pls.cli.context.PlsContext;
 

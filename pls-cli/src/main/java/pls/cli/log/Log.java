@@ -37,7 +37,7 @@ public interface Log {
 
     default String caller(){
         return CALLER_WALKER.walk(frames -> frames
-                .filter(f -> !PlsContext.class.isAssignableFrom(f.getDeclaringClass()))
+                .filter(f -> !Log.class.isAssignableFrom(f.getDeclaringClass()))
                 .findFirst()
                 .map(StackWalker.StackFrame::getClassName)
                 .orElse(PlsContext.class.getName()));

@@ -7,17 +7,25 @@ import java.util.TreeMap;
  * Key map for a single scanned resource ({"path": ..., "kind": "file"}),
  * ordered by full path.
  */
-public class ResourceRecord extends TreeMap<String, String> implements Comparable<ResourceRecord> {
+public class ResourceRecord extends TreeMap<String, Object> implements Comparable<ResourceRecord> {
 
-    public static final String KIND_FILE = "file";
+    private ResourceKind kind;
+
 
     public ResourceRecord(Path path) {
-        put("path", path.toString());
-        put("kind", KIND_FILE);
+        put("path", path);
+        put("kind", ResourceKind.FILE.name());
+        if (path.toFile().isFile()) {
+            kind = ResourceKind.FILE;
+        }
     }
 
-    public String path() {
-        return get("path");
+    public ResourceKind kind() {
+        return kind;
+    }
+
+    public Path path() {
+        return (Path) get("path");
     }
 
     @Override

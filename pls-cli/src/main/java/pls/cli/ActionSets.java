@@ -2,6 +2,7 @@ package pls.cli;
 
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 import jakarta.enterprise.context.ApplicationScoped;
 
@@ -9,15 +10,7 @@ import jakarta.enterprise.context.ApplicationScoped;
 @ApplicationScoped
 public class ActionSets {
 
-    public static final ActionSet CLOUDFORMATION = new ActionSet("cloudformation");
-    public static final ActionSet SHELL = new ActionSet("shell");
+    public static final Set<Action> CLOUDFORMATION = Set.of(Action.DEPLOY, Action.DESTROY);
+    public static final Set<Action> SHELL = Set.of(Action.EXEC);
 
-    private static final Map<ActionSet, List<Action>> ACTIONS = Map.of(
-            CLOUDFORMATION, List.of(new Action("deploy"), new Action("destroy")),
-            SHELL, List.of(new Action("execute")));
-
-    /** Returns the actions available for the given action set, or an empty list if unknown. */
-    public List<Action> actionsFor(ActionSet actionSet) {
-        return ACTIONS.getOrDefault(actionSet, List.of());
-    }
 }

@@ -1,8 +1,10 @@
 package pls.cli.context;
 
 import java.nio.file.Path;
+import java.util.List;
 
 import jakarta.inject.Inject;
+import pls.cli.ResourceRecord;
 import pls.cli.act.ActContext;
 import pls.cli.plan.PlanContext;
 import pls.cli.report.ReportContext;
@@ -12,9 +14,6 @@ import pls.cli.scan.ScanContext;
  * AnyContext
  */
 public abstract class AnyContext implements PlsContext {
-
-    private String goal;
-    private Path dir;
 
     @Inject
     ScanContext scanContext;
@@ -27,6 +26,19 @@ public abstract class AnyContext implements PlsContext {
 
     @Inject
     ReportContext reportContext;
+
+    private String goal;
+    private Path dir;
+
+    private List<ResourceRecord> resourceRecords = List.of();
+
+    public List<ResourceRecord> getResourceRecords() {
+        return resourceRecords;
+    }
+
+    public void setResourceRecords(List<ResourceRecord> resourceRecords) {
+        this.resourceRecords = resourceRecords;
+    }
 
 
     public String getGoal() {
@@ -53,7 +65,7 @@ public abstract class AnyContext implements PlsContext {
         return scanContext;
     }
 
-    public PlanContext classify() {
+    public PlanContext plan() {
         return classifyContext;
     }
 

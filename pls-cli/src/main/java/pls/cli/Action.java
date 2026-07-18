@@ -4,7 +4,10 @@ package pls.cli;
 public record Action(String value) {
 
     public static final Action DEPLOY = new Action("deploy");
+    public static final Action DESTROY = new Action("destroy");
     public static final Action PRUNE = new Action("prune");
+    public static final Action EXEC = new Action("exec");
+
 
     @Override
     public String toString() {

@@ -62,7 +62,7 @@ public class PlsCommand implements Runnable {
         
         var actions = plan(new Goal(goal));
         for (var action : actions) {
-            scar(action);    
+            spar(action);    
         }
         
 
@@ -79,7 +79,7 @@ public class PlsCommand implements Runnable {
         };
     }
 
-    private void scar(Action action) {
+    private void spar(Action action) {
         scan(action);
         plan(action);
         act(action);
@@ -93,6 +93,7 @@ public class PlsCommand implements Runnable {
 
     private void plan(Action action) {
         log.info("🧐 Planning on [%s]", action);
+        ctx.plan().accept(action);
     }
 
     private void act(Action action) {
