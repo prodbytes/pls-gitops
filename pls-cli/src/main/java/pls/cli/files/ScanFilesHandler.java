@@ -8,12 +8,16 @@ import pls.cli.Action;
 import pls.cli.ActionSets;
 import pls.cli.context.PlsContext;
 import pls.cli.deploy.DeployFile;
+import pls.cli.log.Log;
 
 @ApplicationScoped
 public class ScanFilesHandler {
 
     private static final Action DEPLOY = new Action("deploy");
 
+    @Inject
+    Log log;
+    
     @Inject
     PlsContext ctx;
 
@@ -27,7 +31,7 @@ public class ScanFilesHandler {
     Event<DeployFile> deployFile;
 
     void onDeploy(@Observes ScanFilesEvent event) {
-        ctx.info("Scan files started in %s", event.dir().toAbsolutePath().normalize());
+        log.info("Scan files started in %s", event.dir().toAbsolutePath().normalize());
         var fileResources = fileScanner.scan();
         ctx.scan().setResourceRecords(fileResources);
     }

@@ -4,7 +4,7 @@ import java.nio.file.Path;
 
 import jakarta.inject.Inject;
 import pls.cli.act.ActContext;
-import pls.cli.classify.ClassifyContext;
+import pls.cli.plan.PlanContext;
 import pls.cli.report.ReportContext;
 import pls.cli.scan.ScanContext;
 
@@ -20,13 +20,14 @@ public abstract class AnyContext implements PlsContext {
     ScanContext scanContext;
     
     @Inject
-    ClassifyContext classifyContext;
+    PlanContext classifyContext;
     
     @Inject
     ActContext actContext;
 
     @Inject
     ReportContext reportContext;
+
 
     public String getGoal() {
         return goal;
@@ -52,7 +53,7 @@ public abstract class AnyContext implements PlsContext {
         return scanContext;
     }
 
-    public ClassifyContext classify() {
+    public PlanContext classify() {
         return classifyContext;
     }
 

@@ -11,6 +11,7 @@ import picocli.CommandLine.Parameters;
 import pls.cli.config.PlsConfig;
 import pls.cli.context.PlsContext;
 import pls.cli.files.ScanFilesEvent;
+import pls.cli.log.Log;
 import pls.cli.prune.PruneEvent;
 
 @Command(name = "pls", mixinStandardHelpOptions = true)
@@ -21,6 +22,9 @@ public class PlsCommand implements Runnable {
     
     @Inject
     PlsContext ctx;
+
+    @Inject
+    Log log;
 
     @Inject
     Event<ScanFilesEvent> deployEvent;
@@ -42,13 +46,13 @@ public class PlsCommand implements Runnable {
 
     @Override
     public void run() {
-        ctx.info("pls... running. Press 'q' or 'ctrl+c' to exit.");
-        ctx.info("goal: %s" ,goal); 
-        ctx.info("dir: %s", dir.toAbsolutePath().normalize());
-        ctx.debug("config.tuiEnabled: %s", config.tuiEnabled().map(String::valueOf).orElse("unset"));
+        log.info("pls... running. Press 'q' or 'ctrl+c' to exit.");
+        log.info("goal: %s" ,goal); 
+        log.info("dir: %s", dir.toAbsolutePath().normalize());
+        log.debug("config.tuiEnabled: %s", config.tuiEnabled().map(String::valueOf).orElse("unset"));
 
         if (!Files.isDirectory(dir)) {
-            ctx.info("Directory does not exist: %s", dir.toAbsolutePath().normalize());
+            log.info("Directory does not exist: %s", dir.toAbsolutePath().normalize());
             return;
         }
 
@@ -62,7 +66,7 @@ public class PlsCommand implements Runnable {
         }
         
 
-        ctx.info("Done, quit with 'q' or 'ctrl+c'!");
+        log.info("Done, quit with 'q' or 'ctrl+c'!");
         ctx.await();
     }
 
@@ -77,26 +81,26 @@ public class PlsCommand implements Runnable {
 
     private void scar(Action action) {
         scan(action);
-        classify(action);
+        plan(action);
         act(action);
         report(action);
     }
 
     private void scan(Action action) {
-        ctx.info("🔎 Scanning on [%s]", action);
+        log.info("🔎 Scanning on [%s]", action);
         ctx.scan().accept(action);
     }
 
-    private void classify(Action action) {
-        ctx.info("🧐 Classifying on [%s]", action);
+    private void plan(Action action) {
+        log.info("🧐 Planning on [%s]", action);
     }
 
     private void act(Action action) {
-        ctx.info("⚡ Acting on [%s]", action);
+        log.info("⚡ Acting on [%s]", action);
     }
 
     private void report(Action action) {
-        ctx.info("📝 Reporting on [%s]", action);
+        log.info("📝 Reporting on [%s]", action);
     }
 
 }

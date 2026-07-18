@@ -40,8 +40,4 @@ public class TUIContext extends AnyContext {
         }
     }
 
-    @Override
-    public void info(String format, Object... params) {
-        tui.info(params.length == 0 ? format : String.format(format, params));
-    }
 }
