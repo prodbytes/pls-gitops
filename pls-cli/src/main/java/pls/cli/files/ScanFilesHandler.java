@@ -5,13 +5,13 @@ import jakarta.enterprise.event.Observes;
 import jakarta.inject.Inject;
 import pls.cli.ActionSets;
 import pls.cli.context.PlsContext;
-import pls.cli.log.Log;
+import pls.cli.log.Logs;
 
 @ApplicationScoped
 public class ScanFilesHandler {
 
     @Inject
-    Log log;
+    Logs log;
     
     @Inject
     PlsContext ctx;

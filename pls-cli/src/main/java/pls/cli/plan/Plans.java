@@ -8,7 +8,7 @@ import pls.cli.Action;
 import pls.cli.ResourceKind;
 import pls.cli.ResourceRecord;
 import pls.cli.files.FilePlanner;
-import pls.cli.log.Log;
+import pls.cli.log.Logs;
 
 @ApplicationScoped
 public class Plans {
@@ -17,7 +17,7 @@ public class Plans {
     FilePlanner filePlanner;    
 
     @Inject
-    Log log;
+    Logs log;
 
     public List<Action> planFor(Action action, ResourceRecord resource) {
         var kind = resource.kind();

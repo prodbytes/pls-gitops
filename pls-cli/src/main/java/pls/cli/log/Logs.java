@@ -4,7 +4,7 @@ import org.jboss.logging.Logger;
 
 import pls.cli.context.PlsContext;
 
-public interface Log {
+public interface Logs {
     StackWalker CALLER_WALKER = StackWalker.getInstance(StackWalker.Option.RETAIN_CLASS_REFERENCE);
 
     default void info(String format, Object... params){
@@ -37,7 +37,7 @@ public interface Log {
 
     default String caller(){
         return CALLER_WALKER.walk(frames -> frames
-                .filter(f -> !Log.class.isAssignableFrom(f.getDeclaringClass()))
+                .filter(f -> !Logs.class.isAssignableFrom(f.getDeclaringClass()))
                 .findFirst()
                 .map(StackWalker.StackFrame::getClassName)
                 .orElse(PlsContext.class.getName()));

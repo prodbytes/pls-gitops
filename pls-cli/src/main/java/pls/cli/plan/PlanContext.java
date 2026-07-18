@@ -10,13 +10,13 @@ import jakarta.inject.Inject;
 import pls.cli.Action;
 import pls.cli.ResourceRecord;
 import pls.cli.context.PlsContext;
-import pls.cli.log.Log;
+import pls.cli.log.Logs;
 
 /** State of the plan phase. */
 @Dependent
 public class PlanContext {
     @Inject
-    Log log;
+    Logs log;
 
     @Inject
     PlsContext ctx;

@@ -4,7 +4,7 @@ import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.enterprise.event.Observes;
 import jakarta.inject.Inject;
 import pls.cli.context.PlsContext;
-import pls.cli.log.Log;
+import pls.cli.log.Logs;
 
 @ApplicationScoped
 public class PruneHandler {
@@ -13,7 +13,7 @@ public class PruneHandler {
     PlsContext ctx;
 
     @Inject
-    Log log;
+    Logs log;
 
     void onPrune(@Observes PruneEvent event) {
         log.info("Prune started in %s", event.dir().toAbsolutePath().normalize());

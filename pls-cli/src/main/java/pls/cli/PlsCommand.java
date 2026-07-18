@@ -11,7 +11,7 @@ import picocli.CommandLine.Parameters;
 import pls.cli.config.PlsConfig;
 import pls.cli.context.PlsContext;
 import pls.cli.files.ScanFilesEvent;
-import pls.cli.log.Log;
+import pls.cli.log.Logs;
 import pls.cli.prune.PruneEvent;
 
 @Command(name = "pls", mixinStandardHelpOptions = true)
@@ -24,7 +24,7 @@ public class PlsCommand implements Runnable {
     PlsContext ctx;
 
     @Inject
-    Log log;
+    Logs log;
 
     @Inject
     Event<ScanFilesEvent> deployEvent;
