@@ -1,23 +1,18 @@
 #!/usr/bin/env bash
-# Publishes the native pls binary to a GitHub release with JReleaser.
-# Requires JRELEASER_GITHUB_TOKEN (a GitHub token with repo scope) and a
-# previously built native binary (`make native`).
+# Releases pls everywhere: builds and pushes the container image to
+# Docker Hub (make-image.sh), then publishes the native binary extracted
+# from that image to a GitHub release with JReleaser (make-jreleaser.sh).
+# See each script for its prerequisites.
 set -euo pipefail
 
-cd "$(dirname "$0")/.."
+cd "$(dirname "$0")"
 
-: "${JRELEASER_GITHUB_TOKEN:?set JRELEASER_GITHUB_TOKEN to a GitHub token with repo scope}"
+# Pin the version once so the image tag and the GitHub release match
+# (version.sh regenerates the Z timestamp component on every call).
+VERSION="$(./version.sh)"
+export VERSION
 
-if [ ! -x pls-cli/target/pls ]; then
-    echo "pls-cli/target/pls not found; build it first with 'make native'" >&2
-    exit 1
-fi
+./make-image.sh
+./make-jreleaser.sh
 
-JRELEASER_PROJECT_VERSION="$(cd pls-cli && ./mvnw -q help:evaluate -Dexpression=project.version -DforceStdout)"
-export JRELEASER_PROJECT_VERSION
-
-# devbox installs the binary as jreleaser-cli; other installs name it jreleaser
-JRELEASER="$(command -v jreleaser-cli || command -v jreleaser)" \
-    || { echo "jreleaser not found; enter the devbox shell first" >&2; exit 1; }
-
-exec "$JRELEASER" full-release
+echo "Released $VERSION in $((SECONDS / 60))m$((SECONDS % 60))s"

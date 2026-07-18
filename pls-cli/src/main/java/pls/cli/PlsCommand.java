@@ -7,7 +7,9 @@ import java.util.List;
 import jakarta.enterprise.event.Event;
 import jakarta.inject.Inject;
 import picocli.CommandLine.Command;
+import picocli.CommandLine.Model.CommandSpec;
 import picocli.CommandLine.Parameters;
+import picocli.CommandLine.Spec;
 import pls.cli.config.PlsConfig;
 import pls.cli.context.PlsContext;
 import pls.cli.files.ScanFilesEvent;
@@ -38,7 +40,11 @@ public class PlsCommand implements Runnable {
     @Inject
     PruneEvent prune;
 
-    @Parameters(index = "0", paramLabel = "goal", arity = "0..1", description = "The goal to accomplish (e.g. gitops)")
+    @Spec
+    CommandSpec spec;
+
+    @Parameters(index = "0", paramLabel = "goal", arity = "0..1", defaultValue = "help",
+            description = "The goal to accomplish: help, deploy, destroy, prune, or gitops (deploy then prune)")
     String goal;
 
     @Parameters(index = "1", paramLabel = "dir", arity = "0..1", defaultValue = ".", description = "Target directory (defaults to current directory)")
@@ -46,6 +52,11 @@ public class PlsCommand implements Runnable {
 
     @Override
     public void run() {
+        if ("help".equals(goal)) {
+            spec.commandLine().usage(spec.commandLine().getOut());
+            return;
+        }
+
         log.info("pls... running. Press 'q' or 'ctrl+c' to exit.");
         log.info("goal: %s" ,goal); 
         log.info("dir: %s", dir.toAbsolutePath().normalize());
@@ -73,6 +84,7 @@ public class PlsCommand implements Runnable {
     private List<Action> plan(Goal goal) {
         return switch (goal.value()) {
             case "deploy" -> List.of(Action.DEPLOY);
+            case "destroy" -> List.of(Action.DESTROY);
             case "prune" -> List.of(Action.PRUNE);
             case "gitops" -> List.of(Action.DEPLOY, Action.PRUNE);
             default -> List.of();

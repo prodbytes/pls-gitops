@@ -1,7 +1,8 @@
 # JReleaser configuration: publishes the native `pls` binary as a GitHub
 # release. Run via `make release` (see scripts/make-release.sh); requires
-# JRELEASER_GITHUB_TOKEN. Project version is injected from the pom by the
-# release script as JRELEASER_PROJECT_VERSION.
+# JRELEASER_GITHUB_TOKEN. Project version is injected by the release
+# script as JRELEASER_PROJECT_VERSION (X.Y.Z from version.x.txt,
+# version.y.txt, and a timestamp — see scripts/version.sh).
 project:
   name: pls
   description: GitOps CLI built with Quarkus
@@ -12,6 +13,9 @@ project:
   license: MIT
   inceptionYear: "2026"
   stereotype: CLI
+  # The Z component is a 12-digit timestamp, which overflows JReleaser's
+  # int-based semver parser; CUSTOM skips semver parsing entirely.
+  versionPattern: CUSTOM
 
 release:
   github:

@@ -5,7 +5,7 @@ all: native
 native:
 	./scripts/make.sh
 
-release: native
+release:
 	./scripts/make-release.sh
 
 image:

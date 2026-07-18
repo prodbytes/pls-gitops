@@ -7,7 +7,7 @@ set -euo pipefail
 
 cd "$(dirname "$0")/.."
 
-VERSION="$(cd pls-cli && ./mvnw -q help:evaluate -Dexpression=project.version -DforceStdout)"
+VERSION="${VERSION:-$(./scripts/version.sh)}"
 
 if [ -z "${IMAGE:-}" ]; then
     NAMESPACE="${DOCKERHUB_NAMESPACE:-$(docker system info 2>/dev/null | awk '/Username:/ {print $2}')}"
