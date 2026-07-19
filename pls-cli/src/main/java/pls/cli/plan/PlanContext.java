@@ -28,6 +28,7 @@ public class PlanContext {
     @Inject
     FilePlanner filePlanner;
 
+    //TODO make plan a list of ActionRecord, retaining the ActionSet
     private Map<ResourceRecord, Action> plan = new LinkedHashMap<>();
 
     public void accept(Action action) {

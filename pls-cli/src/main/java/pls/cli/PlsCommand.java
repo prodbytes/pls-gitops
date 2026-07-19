@@ -47,7 +47,8 @@ public class PlsCommand implements Runnable {
             description = "The goal to accomplish: help, deploy, destroy, prune, or gitops (deploy then prune)")
     String goal;
 
-    @Parameters(index = "1", paramLabel = "dir", arity = "0..1", defaultValue = ".", description = "Target directory (defaults to current directory)")
+    @Parameters(index = "1", paramLabel = "dir", arity = "0..1",
+            description = "Target directory (defaults to $GITHUB_WORKSPACE, then /docker-entrypoint.d, then the current directory)")
     Path dir;
 
     @Override
@@ -58,7 +59,8 @@ public class PlsCommand implements Runnable {
         }
 
         log.info("pls... running. Press 'q' or 'ctrl+c' to exit.");
-        log.info("goal: %s" ,goal); 
+        log.info("goal: %s" ,goal);
+        dir = resolveDir();
         log.info("dir: %s", dir.toAbsolutePath().normalize());
         log.debug("config.tuiEnabled: %s", config.tuiEnabled().map(String::valueOf).orElse("unset"));
 
@@ -79,6 +81,21 @@ public class PlsCommand implements Runnable {
 
         log.info("Done, quit with 'q' or 'ctrl+c'!");
         ctx.await();
+    }
+
+    private Path resolveDir() {
+        if (dir != null) {
+            return dir;
+        }
+        var workspace = System.getenv("GITHUB_WORKSPACE");
+        if (workspace != null && !workspace.isBlank()) {
+            return Path.of(workspace);
+        }
+        var entrypoint = Path.of("/docker-entrypoint.d");
+        if (Files.isDirectory(entrypoint)) {
+            return entrypoint;
+        }
+        return Path.of(".");
     }
 
     private List<Action> plan(Goal goal) {
