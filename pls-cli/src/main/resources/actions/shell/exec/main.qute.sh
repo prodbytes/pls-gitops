@@ -1,0 +1,1 @@
+bash {subject.path.fileName}

@@ -19,9 +19,6 @@ public class ScanFilesHandler {
     @Inject
     FileScanner fileScanner;
 
-    @Inject
-    ActionSets actionSets;
-
 
     void onDeploy(@Observes ScanFilesEvent event) {
         log.debug("Scan files started in %s", event.dir().toAbsolutePath().normalize());

@@ -28,7 +28,8 @@ public class ExecCmd {
      * output line to the log as it is produced.
      */
     public ExecResult run(String command, Path dir) {
-        log.info("Executing: %s", command);
+        var workDir = dir != null ? dir : Path.of("").toAbsolutePath();
+        log.debug("Executing: %s%nin: %s", command, workDir);
         var builder = new ProcessBuilder("/bin/sh", "-c", command);
         if (dir != null) {
             builder.directory(dir.toFile());

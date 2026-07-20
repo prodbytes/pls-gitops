@@ -43,6 +43,7 @@ public class ScanContext {
     private List<PlsEvent> getEventsForAction(Action action) {
         switch (action.value()) {
             case "deploy":
+            case "destroy":
                 return List.of(scanFilesEvent.get());
             case "prune":
                 return List.of(); // TODO: implement prune events

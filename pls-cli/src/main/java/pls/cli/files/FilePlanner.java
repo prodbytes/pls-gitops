@@ -9,6 +9,7 @@ import java.util.Optional;
 import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.inject.Inject;
 import pls.cli.Action;
+import pls.cli.ActionRecord;
 import pls.cli.ActionSets;
 import pls.cli.ResourceRecord;
 import pls.cli.context.PlsContext;
@@ -21,13 +22,18 @@ public class FilePlanner {
 
     
 
-    public Optional<Action> planFor(ResourceRecord resource, Action action) {
+    public Optional<ActionRecord> planFor(ResourceRecord resource, Action action) {
         var file = resource.path();
         var name = file.getFileName().toString();
         if (name.contains(".cform.")) {
-            var actionSet = ActionSets.CLOUDFORMATION;
+            var actionSet = ActionSets.Cloudformation;
             if(actionSet.contains(action)){
-                return Optional.of(action);
+                var actionRecord = new ActionRecord(
+                    action,
+                    actionSet,
+                    resource
+                );
+                return Optional.of(actionRecord);
             }
         }
         return Optional.empty();

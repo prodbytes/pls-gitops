@@ -110,8 +110,11 @@ public class PlsCommand implements Runnable {
 
     private void spar(Action action) {
         scan(action);
+        
         plan(action);
+        
         act(action);
+        
         report(action);
     }
 
@@ -127,6 +130,7 @@ public class PlsCommand implements Runnable {
 
     private void act(Action action) {
         log.info("⚡ Acting on [%s]", action);
+        ctx.act().accept(action);
     }
 
     private void report(Action action) {

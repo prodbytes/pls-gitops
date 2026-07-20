@@ -6,11 +6,21 @@ import java.util.Set;
 
 import jakarta.enterprise.context.ApplicationScoped;
 
-/** Known action sets and the actions each one provides. */
-@ApplicationScoped
-public class ActionSets {
 
-    public static final Set<Action> CLOUDFORMATION = Set.of(Action.DEPLOY, Action.DESTROY);
-    public static final Set<Action> SHELL = Set.of(Action.EXEC);
+public enum ActionSets {
+    Cloudformation(Set.of(Action.DEPLOY, Action.DESTROY)),
+    Shell(Set.of(Action.EXEC));
 
+    Set<Action> actions;
+
+    ActionSets(Set<Action> actions){
+        this.actions = actions;
+    }
+
+    public boolean contains(Action action){
+        return actions.contains(action);
+    }
+
+    
+    
 }
