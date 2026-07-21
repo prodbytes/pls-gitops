@@ -13,7 +13,7 @@ public class PruneEvent {
     PlsContext ctx;
 
     public Path dir() {
-        return ctx.getDir();
+        return ctx.getWorkDir();
     }
 
 }

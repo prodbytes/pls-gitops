@@ -32,6 +32,7 @@ public abstract class AnyContext implements PlsContext {
 
     private String goal;
     private Path dir;
+    private String prefix = "";
 
     //TODO: Consider moving this list to ScanContext
     private List<ResourceRecord> resourceRecords = List.of();
@@ -64,6 +65,14 @@ public abstract class AnyContext implements PlsContext {
 
     public void setDir(Path dir) {
         this.dir = dir;
+    }
+
+    public String getPrefix() {
+        return prefix;
+    }
+
+    public void setPrefix(String prefix) {
+        this.prefix = prefix == null ? "" : prefix;
     }
 
     public ScanContext scan() {

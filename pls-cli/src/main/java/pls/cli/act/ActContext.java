@@ -46,7 +46,7 @@ public class ActContext {
         }
         var command = render(template.get(), ar);
         ar.timeStart(Instant.now());
-        var result = exec.run(command, ctx.getDir());
+        var result = exec.run(command, ctx.getWorkDir());
         ar.timeEnd(Instant.now());
         ar.result(result);
     }
@@ -83,6 +83,8 @@ public class ActContext {
                 .data("actionSet", ar.actionSet())
                 .data("subject", ar.subject())
                 .data("dir", ctx.getDir())
+                .data("prefix", ctx.getPrefix())
+                .data("workDir", ctx.getWorkDir())
                 .data("goal", ctx.getGoal())
                 .render();
     }

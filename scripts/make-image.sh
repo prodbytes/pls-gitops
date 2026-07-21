@@ -18,9 +18,16 @@ if [ -z "${IMAGE:-}" ]; then
     IMAGE="docker.io/$NAMESPACE/pls"
 fi
 
-docker build -t "$IMAGE:$VERSION" -t "$IMAGE:latest" -f pls-cli/Containerfile pls-cli
+# Base image with the tools the actions delegate to (aws, terraform);
+# pls-cli's runtime stage builds FROM it via the BASE_IMAGE build arg.
+docker build -t "$IMAGE-ubi:$VERSION" -t "$IMAGE-ubi:latest" -f pls-ubi/Containerfile pls-ubi
 
+docker build --build-arg BASE_IMAGE="$IMAGE-ubi:$VERSION" \
+    -t "$IMAGE:$VERSION" -t "$IMAGE:latest" -f pls-cli/Containerfile pls-cli
+
+docker push "$IMAGE-ubi:$VERSION"
+docker push "$IMAGE-ubi:latest"
 docker push "$IMAGE:$VERSION"
 docker push "$IMAGE:latest"
 
-echo "Pushed $IMAGE:$VERSION and $IMAGE:latest"
+echo "Pushed $IMAGE-ubi:$VERSION and $IMAGE:$VERSION (and :latest)"

@@ -1,1 +1,1 @@
-bash {subject.path.fileName}
+./{subject.path.fileName}

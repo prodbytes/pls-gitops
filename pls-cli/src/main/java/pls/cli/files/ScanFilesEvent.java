@@ -14,7 +14,7 @@ public class ScanFilesEvent implements PlsEvent {
     PlsContext ctx;
 
     public Path dir() {
-        return ctx.getDir();
+        return ctx.getWorkDir();
     }
 
 }

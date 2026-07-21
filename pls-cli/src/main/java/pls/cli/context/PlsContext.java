@@ -22,7 +22,13 @@ public interface PlsContext {
     void setGoal(String goal);
     Path getDir();
     void setDir(Path dir);
-    
+    String getPrefix();
+    void setPrefix(String prefix);
+    /** Where scan/plan/act/report operate: {@code dir/prefix}; {@code dir} itself stays available as context. */
+    default Path getWorkDir() {
+        return getDir().resolve(getPrefix());
+    }
+
     List<ResourceRecord> getResourceRecords();
     void setResourceRecords(List<ResourceRecord> resourceRecords);
 

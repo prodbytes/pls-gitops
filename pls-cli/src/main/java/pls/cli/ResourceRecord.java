@@ -20,6 +20,12 @@ public class ResourceRecord extends TreeMap<String, Object> implements Comparabl
         }
     }
 
+    public ResourceRecord(Path path, ResourceKind kind) {
+        put("path", path);
+        put("kind", kind.name());
+        this.kind = kind;
+    }
+
     public ResourceKind kind() {
         return kind;
     }

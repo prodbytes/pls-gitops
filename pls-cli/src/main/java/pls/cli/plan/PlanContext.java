@@ -15,6 +15,7 @@ import pls.cli.ActionRecord;
 import pls.cli.ActionSets;
 import pls.cli.ResourceKind;
 import pls.cli.ResourceRecord;
+import pls.cli.bins.BinPlanner;
 import pls.cli.context.PlsContext;
 import pls.cli.files.FilePlanner;
 import pls.cli.log.Logs;
@@ -31,6 +32,9 @@ public class PlanContext {
     @Inject
     FilePlanner filePlanner;
 
+    @Inject
+    BinPlanner binPlanner;
+
     private List<ActionRecord> plan = new LinkedList<>();
 
     public void accept(Action action) {
@@ -40,6 +44,9 @@ public class PlanContext {
             var optionalAction = Optional.<ActionRecord>empty();
             if (kind == ResourceKind.FILE) {
                 optionalAction = filePlanner.planFor(resource, action);
+            }
+            if (kind == ResourceKind.BIN) {
+                optionalAction = binPlanner.planFor(resource, action);
             }
             if (optionalAction.isPresent()) {
                 var resourceAction = optionalAction.get();

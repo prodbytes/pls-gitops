@@ -7,6 +7,7 @@ public record Action(String value) {
     public static final Action DESTROY = new Action("destroy");
     public static final Action PRUNE = new Action("prune");
     public static final Action EXEC = new Action("exec");
+    public static final Action VERSION = new Action("version");
 
 
     @Override

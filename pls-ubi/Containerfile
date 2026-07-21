@@ -1,0 +1,31 @@
+####
+# Base image for running the pls CLI: UBI minimal plus the tools the
+# actions delegate to (AWS CLI, Terraform).
+#
+#   podman build -t pls-ubi pls-ubi
+#
+# make-image.sh builds and pushes this image before pls-cli, which uses
+# it as its runtime stage (BASE_IMAGE build arg).
+####
+FROM registry.access.redhat.com/ubi10/ubi-minimal:latest
+
+ARG AWSCLI_VERSION=2.36.4
+ARG TERRAFORM_VERSION=1.15.8
+
+# unzip to install the tools below; zlib for the pls native binary
+RUN microdnf install -y unzip zlib && microdnf clean all
+
+RUN curl -sSL -o /tmp/awscliv2.zip \
+      "https://awscli.amazonaws.com/awscli-exe-linux-x86_64-${AWSCLI_VERSION}.zip" \
+ && unzip -q /tmp/awscliv2.zip -d /tmp \
+ && /tmp/aws/install \
+ && rm -rf /tmp/awscliv2.zip /tmp/aws
+
+RUN curl -sSL -o "/tmp/terraform_${TERRAFORM_VERSION}_linux_amd64.zip" \
+      "https://releases.hashicorp.com/terraform/${TERRAFORM_VERSION}/terraform_${TERRAFORM_VERSION}_linux_amd64.zip" \
+ && curl -sSL -o /tmp/SHA256SUMS \
+      "https://releases.hashicorp.com/terraform/${TERRAFORM_VERSION}/terraform_${TERRAFORM_VERSION}_SHA256SUMS" \
+ && cd /tmp \
+ && grep "linux_amd64.zip" SHA256SUMS | sha256sum -c - \
+ && unzip -q "terraform_${TERRAFORM_VERSION}_linux_amd64.zip" terraform -d /usr/local/bin \
+ && rm "terraform_${TERRAFORM_VERSION}_linux_amd64.zip" SHA256SUMS

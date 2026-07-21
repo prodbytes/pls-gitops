@@ -1,5 +1,6 @@
 package pls.cli;
 
 public enum ResourceKind {
-    FILE
+    FILE,
+    BIN
 }

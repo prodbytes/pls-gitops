@@ -9,7 +9,8 @@ import jakarta.enterprise.context.ApplicationScoped;
 
 public enum ActionSets {
     Cloudformation(Set.of(Action.DEPLOY, Action.DESTROY)),
-    Shell(Set.of(Action.EXEC));
+    Shell(Set.of(Action.EXEC)),
+    Bin(Set.of(Action.VERSION));
 
     Set<Action> actions;
 

@@ -6,6 +6,11 @@
 #   podman run --rm -it pls-cli <args>
 ####
 
+# Runtime base image carrying the tools the actions delegate to (aws,
+# terraform). make-image.sh builds ../pls-ubi first and overrides this with
+# the freshly built tag; standalone builds pull the published base.
+ARG BASE_IMAGE=docker.io/prodbytes/pls-ubi:latest
+
 ## Stage 1: build the native executable
 FROM quay.io/quarkus/ubi10-quarkus-mandrel-builder-image:jdk-25 AS build
 USER quarkus
@@ -19,8 +24,8 @@ RUN ./mvnw -B quarkus:go-offline
 COPY --chown=quarkus:quarkus src src
 RUN ./mvnw -B package -Dnative -DskipTests -DskipITs
 
-## Stage 2: run it
-FROM quay.io/quarkus/ubi10-quarkus-micro-image:2.0
+## Stage 2: run it on the pls-ubi base image (see BASE_IMAGE above)
+FROM ${BASE_IMAGE}
 WORKDIR /opt/pls
 COPY --from=build --chown=1001:root /usr/src/pls/target/pls /opt/pls/pls
 USER 1001

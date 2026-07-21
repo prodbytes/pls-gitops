@@ -10,6 +10,7 @@ import jakarta.inject.Inject;
 import pls.cli.Action;
 import pls.cli.ResourceRecord;
 import pls.cli.context.PlsContext;
+import pls.cli.bins.ScanBinsEvent;
 import pls.cli.event.PlsEvent;
 import pls.cli.files.ScanFilesEvent;
 import pls.cli.log.Logs;
@@ -23,6 +24,9 @@ public class ScanContext {
 
     @Inject
     Instance<ScanFilesEvent> scanFilesEvent;
+
+    @Inject
+    Instance<ScanBinsEvent> scanBinsEvent;
 
     @Inject
     PlsContext ctx;
@@ -47,6 +51,8 @@ public class ScanContext {
                 return List.of(scanFilesEvent.get());
             case "prune":
                 return List.of(); // TODO: implement prune events
+            case "version":
+                return List.of(scanBinsEvent.get());
             default:
                 throw new IllegalArgumentException("Unknown action: " + action);
         }

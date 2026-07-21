@@ -44,12 +44,16 @@ public class PlsCommand implements Runnable {
     CommandSpec spec;
 
     @Parameters(index = "0", paramLabel = "goal", arity = "0..1", defaultValue = "help",
-            description = "The goal to accomplish: help, deploy, destroy, prune, or gitops (deploy then prune)")
+            description = "The goal to accomplish: help, version, deploy, destroy, prune, or gitops (deploy then prune)")
     String goal;
 
     @Parameters(index = "1", paramLabel = "dir", arity = "0..1",
             description = "Target directory (defaults to $GITHUB_WORKSPACE, then /docker-entrypoint.d, then the current directory)")
     Path dir;
+
+    @Parameters(index = "2", paramLabel = "prefix", arity = "0..1", defaultValue = "",
+            description = "Optional subdirectory of dir to scan, plan, act and report on; dir itself stays available as context (defaults to empty, meaning dir itself)")
+    String prefix;
 
     @Override
     public void run() {
@@ -62,15 +66,20 @@ public class PlsCommand implements Runnable {
         log.info("goal: %s" ,goal);
         dir = resolveDir();
         log.info("dir: %s", dir.toAbsolutePath().normalize());
+        var workDir = dir.resolve(prefix);
+        if (!prefix.isEmpty()) {
+            log.info("prefix: %s (working in %s)", prefix, workDir.toAbsolutePath().normalize());
+        }
         log.debug("config.tuiEnabled: %s", config.tuiEnabled().map(String::valueOf).orElse("unset"));
 
-        if (!Files.isDirectory(dir)) {
-            log.info("Directory does not exist: %s", dir.toAbsolutePath().normalize());
+        if (!Files.isDirectory(workDir)) {
+            log.info("Directory does not exist: %s", workDir.toAbsolutePath().normalize());
             return;
         }
 
         ctx.setGoal(goal);
         ctx.setDir(dir);
+        ctx.setPrefix(prefix);
         ctx.init();
         
         var actions = plan(new Goal(goal));
@@ -104,6 +113,7 @@ public class PlsCommand implements Runnable {
             case "destroy" -> List.of(Action.DESTROY);
             case "prune" -> List.of(Action.PRUNE);
             case "gitops" -> List.of(Action.DEPLOY, Action.PRUNE);
+            case "version" -> List.of(Action.VERSION);
             default -> List.of();
         };
     }

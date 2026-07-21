@@ -23,13 +23,13 @@ public class FileScanner {
      * action set as a {@link ResourceRecord}, ordered by full path.
      */
     public List<ResourceRecord> scan() {
-        try (Stream<Path> paths = Files.walk(ctx.getDir())) {
+        try (Stream<Path> paths = Files.walk(ctx.getWorkDir())) {
             return paths.filter(Files::isRegularFile)
                     .map(ResourceRecord::new)
                     .sorted()
                     .toList();
         } catch (IOException e) {
-            throw new UncheckedIOException("Failed to scan " + ctx.getDir(), e);
+            throw new UncheckedIOException("Failed to scan " + ctx.getWorkDir(), e);
         }
     }
 
